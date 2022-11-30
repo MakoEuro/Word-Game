@@ -1,0 +1,30 @@
+@import "./reset.css";
+
+:root {
+    --app-dark-bg: #201c22;
+    --app-font-color: #f2f4f6;
+
+    /* COLORS */
+
+    --app-blue: #09f;
+    --app-green: #9f0;
+    --app-orange: #f90;
+    --app-pink: #f09;
+    --app-purple: #90f;
+}
+
+html {
+    scroll-behavior: smooth;   
+}
+    
+body {
+    background-color: var(--app-dark-bg);
+    /* background-image: url('./img/background.jpg');  */
+    background-size: contain;
+}
+    
+.container {
+    width: min(100% - 30px, 1280px);
+    margin-inline: auto;
+}
+
