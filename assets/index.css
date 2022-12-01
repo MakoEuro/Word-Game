@@ -20,8 +20,7 @@ html {
     
 body {
     background-color: var(--app-pink);
-    /* background-image: url('./img/background.jpg');  */
-    background-size: contain;
+    overflow: hidden;
 }
     
 .container {
@@ -38,8 +37,14 @@ main {
     padding: 100px;
 }
 
+.game {
+    height: 80vh;
+    border: 1px solid #ff7fcc;
+    border-radius: 10px;
+}
+
 .title {
-    animation: killWindow 2s;
+    margin-top: 150px;
     cursor:default;
     user-select: none;
 }
@@ -66,7 +71,6 @@ main {
 - - - - - - - - - - - - - - - - - - - - */
 
 .start {
-    margin-top: 50px;
     padding: 10px;
     min-width: 100px;
     width: 10vw;
@@ -83,10 +87,37 @@ main {
     transform: scale(1.4);
 }
 
+.reset {
+    margin-top: 20px;
+    padding: 10px;
+    min-width: 100px;
+    width: 10vw;
+    font-size: 24px;
+    border-radius: 5px;
+    color: var(--app-font-color);
+    background-color: #ff60bf;
+    transition: 0.2s ease-in-out;
+    display: none;
+}
+
+.reset:hover {
+    transform: scale(1.4);
+}
+
 .word {
-    margin-top: 50px;
+    margin-top: 200px;
     color: var(--app-cute-font-color);
     font-size: 30px;
+}
+
+.numerical {
+    color: var(--app-cute-font-color);
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    margin: 30px;
 }
 
 .input {

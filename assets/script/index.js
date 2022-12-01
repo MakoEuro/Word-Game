@@ -18,9 +18,13 @@ function sleep(duration) {
 // Selectors
 const title = select('.title');
 const start = select('.start');
+const reset = select('.reset');
 
 const word = select('.word');
 const input = select('.input');
+
+const time = select('.time');
+const score = select('.score');
 
 // Class
 class Score {
@@ -52,7 +56,6 @@ class Score {
     }
 
     get hits() {
-        
         return this.#hits;
     }
 
@@ -95,31 +98,60 @@ function dateTime() {
     return newDate;
 }
 
-let score = 0;
+let points = 0;
 let hits = 0;
 
 onEvent('click', start, function() {
     title.style.display = 'none';
     start.style.display = 'none';
     input.style.display = 'initial';
+    input.focus();
 
+    reset.style.display = 'initial';
+    
+    gameWord();
+    startTimer();
+});
+
+onEvent('click', reset, function() {
+    startTimer();
+    points = 0;
+    score.innerText = points;
     gameWord();
 });
 
 function gameWord() {
-    let wordNum = Math.floor(Math.random() * 100);
+    let wordNum = Math.floor(Math.random() * wordList.length);
     let wordGuess = wordList[wordNum];
+    
+    wordList.splice(wordNum, 1);
 
     word.innerText = wordGuess;
+}
+
+let timeLeft = 98;
+
+function startTimer() {
+    let timeLeft = 98;
+    let timeCount = setInterval(function() {
+        timeLeft--;
+        if(timeLeft <= 0 || reset.onclick) {
+            clearInterval(timeCount);
+            console.log('Time is up!');
+
+            input.disabled = true;
+        }
+        time.innerText = timeLeft;
+    }, 1000);
 }
 
 // Checks if word is written out
 input.onkeyup = function() {
     if(input.value === word.innerText) {
-        score++;
+        points++;
         gameWord();
         input.value = '';
-
+        score.innerText = points;
         // Clears the input, adds 1 point and sets a new word
     }
 }
