@@ -114,6 +114,11 @@ main {
     color: var(--app-cute-font-color);
 }
 
+.tally {
+    color: var(--app-cute-font-color);
+    display: none;
+}
+
 li {
     list-style: none;
     display: inline-block;
