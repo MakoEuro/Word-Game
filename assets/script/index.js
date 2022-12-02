@@ -83,7 +83,7 @@ const date = new Date();
 let points = 0;
 let hits = 0;
 
-const timeLeft = 99;
+const timeLeft = 5;
 let timeCount = timeLeft;
 let timeInterval;
 
@@ -115,14 +115,14 @@ onEvent('click', start, function() {
 });
 
 onEvent('click', reset, function() {
+    clearInterval(timeInterval);
     points = 0;
     score.innerText = points;
+    timeCount = timeLeft;
 
     startTimer();
     gameWord();
 
-    time.innerText = 99;
-    clearInterval(timeInterval);
 });
 
 function gameWord() {
