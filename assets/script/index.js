@@ -44,9 +44,6 @@ class Score {
         "July", "August", "September", "October", "November", "December"
         ];
 
-        // New date
-        const date = new Date();
-
         // Day and Year
         const day = date.getDate();
         const year = date.getFullYear();
@@ -56,14 +53,14 @@ class Score {
     }
 
     get hits() {
+        this.#hits;
         return this.#hits;
     }
 
     get percentage() {
+        this.#percentage = wordList.length / percentage;
         return this.#percentage;
     }
-
-
 }
 
 const wordList = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
@@ -81,25 +78,29 @@ const wordList = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buildin
 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
 'keyboard', 'window'];
 
-function dateTime() {
-    // Generates names instead of numbers
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-    ];
-
-    // New date
-    const date = new Date();
-
-    // Day and Year
-    const day = date.getDate();
-    const year = date.getFullYear();
-
-    let newDate = `${monthNames[date.getMonth()]} ${day}, ${year}`;
-    return newDate;
-}
+const date = new Date();
 
 let points = 0;
 let hits = 0;
+
+const timeLeft = 99;
+let timeCount = timeLeft;
+let timeInterval;
+
+function startTimer() {
+    timeCount = timeLeft;
+    timeInterval = setInterval(() => {
+    timeCount--;
+    console.log(timeCount);
+    if(timeCount <= 0) {
+        clearInterval(timeInterval);
+        console.log('Time is up!');
+        const finalScore = new Score(date, points, points);
+        input.disabled = true;
+    }
+        time.innerText = timeCount;
+    }, 1000);
+}
 
 onEvent('click', start, function() {
     title.style.display = 'none';
@@ -114,10 +115,14 @@ onEvent('click', start, function() {
 });
 
 onEvent('click', reset, function() {
-    startTimer();
     points = 0;
     score.innerText = points;
+
+    startTimer();
     gameWord();
+
+    time.innerText = 99;
+    clearInterval(timeInterval);
 });
 
 function gameWord() {
@@ -127,22 +132,6 @@ function gameWord() {
     wordList.splice(wordNum, 1);
 
     word.innerText = wordGuess;
-}
-
-let timeLeft = 98;
-
-function startTimer() {
-    let timeLeft = 98;
-    let timeCount = setInterval(function() {
-        timeLeft--;
-        if(timeLeft <= 0 || reset.onclick) {
-            clearInterval(timeCount);
-            console.log('Time is up!');
-
-            input.disabled = true;
-        }
-        time.innerText = timeLeft;
-    }, 1000);
 }
 
 // Checks if word is written out
