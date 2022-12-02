@@ -97,12 +97,14 @@ const wordList = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'buildin
 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
 'keyboard', 'window'];
 
+let audio = new Audio('./assets/media/jazzyfrenchy.mp3');
+
 const date = new Date();
 
 let points = 0;
 let hits = 0;
 
-const timeLeft = 5;
+const timeLeft = 99;
 let timeCount = timeLeft;
 let timeInterval;
 
@@ -134,6 +136,9 @@ onEvent('click', start, function() {
     
     gameWord();
     startTimer();
+
+    audio.play();
+    audio.volume = 0.2;
 });
 
 onEvent('click', reset, function() {
