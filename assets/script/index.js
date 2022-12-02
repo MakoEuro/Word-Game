@@ -23,8 +23,15 @@ const reset = select('.reset');
 const word = select('.word');
 const input = select('.input');
 
+const numer = select('.numerical');
+const tally = select('.tally');
+
 const time = select('.time');
 const score = select('.score');
+
+const setDate = select('.date');
+const setScore = select('.score-final');
+const setPercent = select('.percent');
 
 // Class
 class Score {
@@ -58,8 +65,20 @@ class Score {
     }
 
     get percentage() {
-        this.#percentage = wordList.length / percentage;
+        let percentTotal;
+        percentTotal = (points / wordList.length);
+        percentTotal = this.#percentage;
         return this.#percentage;
+    }
+
+    Scoreboard() {
+        setDate.innerText = this.date;
+        setScore.innerText = this.hits;
+        if (points === 0){
+            setPercent.innerText = '0%';
+        } else {
+            setPercent.innerText = `${this.percentage}%`;
+        }
     }
 }
 
@@ -91,12 +110,15 @@ function startTimer() {
     timeCount = timeLeft;
     timeInterval = setInterval(() => {
     timeCount--;
-    console.log(timeCount);
+    // console.log(timeCount);      -- displays seconds countdown (disabled for spam)
     if(timeCount <= 0) {
         clearInterval(timeInterval);
         console.log('Time is up!');
         const finalScore = new Score(date, points, points);
         input.disabled = true;
+        tally.style.display = 'initial';
+        numer.style.display = 'none';
+        finalScore.Scoreboard();
     }
         time.innerText = timeCount;
     }, 1000);
@@ -115,21 +137,30 @@ onEvent('click', start, function() {
 });
 
 onEvent('click', reset, function() {
+    
+
+    clearInterval(timeInterval);
     points = 0;
     score.innerText = points;
 
     startTimer();
     gameWord();
+    input.disabled = false;
+    input.focus();
+    input.value = '';
 
     time.innerText = 99;
-    clearInterval(timeInterval);
+    tally.style.display = 'none';
+    numer.style.display = 'initial';
 });
 
 function gameWord() {
-    let wordNum = Math.floor(Math.random() * wordList.length);
-    let wordGuess = wordList[wordNum];
+    const wordListSummary = wordList;
+
+    let wordNum = Math.floor(Math.random() * wordListSummary.length);
+    let wordGuess = wordListSummary[wordNum];
     
-    wordList.splice(wordNum, 1);
+    wordListSummary.splice(wordNum, 1);
 
     word.innerText = wordGuess;
 }
